@@ -10,7 +10,7 @@
 
         [Parameter]
         public PatientUpdateDto? PatientUpdate { get; set; }
-
+         
         protected override async Task OnInitializedAsync()
         {
             if (PatientUpdate != null)
