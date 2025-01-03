@@ -1,0 +1,59 @@
+﻿@using MudBlazor
+@inherits TreatmentFormViewModel
+
+@if (TreatmentCreate != null && TreatmentCreate.Id == 0)
+{
+    <MudDialog Style="width:inherit">
+        <DialogContent>
+            <MudCard>
+                <MudCardContent>
+                    <MudItem xs="12">
+                        <MudTextField Label="Treatment Name" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="TreatmentCreate.Name" For="@(() => TreatmentCreate.Name)" />
+
+                        <MudTextField Label="Description" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="TreatmentCreate.Description" For="@(() => TreatmentCreate.Description)" />
+
+                        <MudNumericField Label="Price" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                         @bind-Value="TreatmentCreate.Price" For="@(() => TreatmentCreate.Price)" />
+
+                        <MudTextField Label="Duration (in minutes)" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="TreatmentCreate.Duration" For="@(() => TreatmentCreate.Duration)" />
+                    </MudItem>
+                </MudCardContent>
+            </MudCard>
+        </DialogContent>
+        <DialogActions>
+            <MudButton Color="Color.Tertiary" Variant="Variant.Filled" OnClick="() => Cancel()">Cancel</MudButton>
+            <MudButton ButtonType="ButtonType.Submit" Disabled="@Disabled" Variant="Variant.Filled" Color="Color.Tertiary" OnClick="() => CreateOrUpdate()">Save</MudButton>
+        </DialogActions>
+    </MudDialog>
+}
+else
+{
+    <MudDialog Style="width:inherit">
+        <DialogContent>
+            <MudCard>
+                <MudCardContent>
+                    <MudItem xs="12">
+                        <MudTextField Label="Treatment Name" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="TreatmentUpdate.Name" For="@(() => TreatmentUpdate.Name)" />
+
+                        <MudTextField Label="Description" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="TreatmentUpdate.Description" For="@(() => TreatmentUpdate.Description)" />
+
+                        <MudNumericField Label="Price" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                         @bind-Value="TreatmentUpdate.Price" For="@(() => TreatmentUpdate.Price)" />
+
+                        <MudTextField Label="Duration (in minutes)" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="TreatmentUpdate.Duration" For="@(() => TreatmentUpdate.Duration)" />
+                    </MudItem>
+                </MudCardContent>
+            </MudCard>
+        </DialogContent>
+        <DialogActions>
+            <MudButton Color="Color.Tertiary" Variant="Variant.Filled" OnClick="() => Cancel()">Cancel</MudButton>
+            <MudButton ButtonType="ButtonType.Submit" Disabled="@Disabled" Variant="Variant.Filled" Color="Color.Tertiary" OnClick="() => CreateOrUpdate()">Save</MudButton>
+        </DialogActions>
+    </MudDialog>
+}

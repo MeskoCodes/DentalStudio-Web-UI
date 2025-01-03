@@ -1,0 +1,42 @@
+﻿@using MudBlazor
+<MudDialog>
+    <DialogContent>
+        <MudText Typo="Typo.h5" Class="dialog-title">
+            NON-DISCLOSURE AGREEMENT
+        </MudText>
+        <MudText Class="dialog-content">
+            I agree to treat all information I receive through this platform - including, but not limited to, company data, personal data of sellers and buyers, and any communication and documents exchanged through this app - as strictly confidential.
+            I undertake not to use this information for personal purposes or outside the intended buying or selling process. Furthermore, I assure that I will not disclose or distribute this information to third parties, unless necessary for conducting a transaction within this platform and in accordance with the app’s privacy policy.
+            I am aware that a breach of this confidentiality agreement can lead to legal consequences and may result in exclusion from the platform.
+        </MudText>
+    </DialogContent>
+    <DialogActions>
+        <div style="display: flex; justify-content: space-between; width: 100%;">
+            <MudButton Color="Color.Secondary" Variant="Variant.Filled" OnClick="Reject">Cancel</MudButton>
+            <MudButton Color="Color.Secondary" Variant="Variant.Filled" OnClick="Accept">Accept</MudButton>
+        </div>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; } = new();
+    [Parameter] public string ContentText { get; set; } = string.Empty;
+    [Parameter] public string ButtonText { get; set; } = string.Empty;
+    [Parameter] public Color Color { get; set; }
+
+    void Accept() => MudDialog.Close(DialogResult.Ok(true));
+    void Reject() => MudDialog.Close(DialogResult.Ok(false));
+}
+
+<style>
+    .dialog-title {
+        text-align: center;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-bottom: 1em; /* Spacing after title */
+    }
+
+    .dialog-content {
+        margin-bottom: 2em; /* Spacing before buttons */
+    }
+</style>

@@ -1,0 +1,53 @@
+﻿@using MudBlazor
+@inherits PaymentListViewModel
+
+<MudTable Class="ml-4 mt-4 mr-4" Elevation="4" Items="@Payments" Dense Hover="true" Bordered="false" Filter="new Func<PaymentDto, bool>(FilterFunc)" Loading="@Loading">
+    <ToolBarContent>
+        <MudButton StartIcon="@Icons.Material.Filled.Add" Color="Color.Tertiary" Variant="Variant.Outlined" style="font-weight: bold;" OnClick="@(() => CreateOrUpdatePayment(new PaymentDto()))">
+            Create new Payment
+        </MudButton>
+        <MudSpacer />
+        <MudTextField T="string" Label="Search" Variant="Variant.Outlined" @bind-Value="SearchPaymentReference" Clearable="true" Immediate="true" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Search"></MudTextField>
+    </ToolBarContent>
+    <ColGroup>
+        <col />
+        <col />
+        <col />
+        <col />
+        <col style="width:2px;" />
+        <col style="width:2px;" />
+    </ColGroup>
+    <HeaderContent>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Payment Reference</MudTh>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Amount</MudTh>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Payment Date</MudTh>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Invoice Number</MudTh>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;"></MudTh>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;"></MudTh>
+    </HeaderContent>
+    <RowTemplate Context="payment">
+        <MudTd DataLabel="Payment Reference">@payment.PaymentReference</MudTd>
+        <MudTd DataLabel="Amount">@payment.Amount.ToString("C")</MudTd>
+        <MudTd DataLabel="Payment Date">@payment.PaymentDate.ToShortDateString()</MudTd>
+        <MudTd DataLabel="Invoice Number">@payment.InvoiceNumber</MudTd>
+        <MudTd DataLabel="Update">
+            <MudTooltip Text="Update">
+                <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Size="Size.Small" OnClick="@(() => CreateOrUpdatePayment(payment))" />
+            </MudTooltip>
+        </MudTd>
+        <MudTd DataLabel="Delete">
+            <MudTooltip Text="Delete">
+                <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Primary" Size="Size.Small" OnClick="@(() => DeletePayment(payment))" />
+            </MudTooltip>
+        </MudTd>
+    </RowTemplate>
+    <NoRecordsContent>
+        <MudText>No payments found</MudText>
+    </NoRecordsContent>
+    <LoadingContent>
+        <MudText>Loading...</MudText>
+    </LoadingContent>
+    <PagerContent>
+        <MudTablePager RowsPerPageString="Items per page" InfoFormat="@InfoFormat" />
+    </PagerContent>
+</MudTable>

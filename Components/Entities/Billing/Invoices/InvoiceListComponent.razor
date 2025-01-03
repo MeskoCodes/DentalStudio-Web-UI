@@ -1,0 +1,53 @@
+﻿@using MudBlazor
+@inherits InvoiceListViewModel
+
+<MudTable Class="ml-4 mt-4 mr-4" Elevation="4" Items="@Invoices" Dense Hover="true" Bordered="false" Filter="new Func<InvoiceDto, bool>(FilterFunc)" Loading="@Loading">
+    <ToolBarContent>
+        <MudButton StartIcon="@Icons.Material.Filled.Add" Color="Color.Tertiary" Variant="Variant.Outlined" style="font-weight: bold;" OnClick="@(() => CreateOrUpdateInvoice(new InvoiceDto()))">
+            Create new Invoice
+        </MudButton>
+        <MudSpacer />
+        <MudTextField T="string" Label="Search" Variant="Variant.Outlined" @bind-Value="SearchInvoiceNumber" Clearable="true" Immediate="true" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Search"></MudTextField>
+    </ToolBarContent>
+    <ColGroup>
+        <col />
+        <col />
+        <col />
+        <col />
+        <col style="width:2px;" />
+        <col style="width:2px;" />
+    </ColGroup>
+    <HeaderContent>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Invoice Number</MudTh>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Amount</MudTh>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Date Issued</MudTh>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Due Date</MudTh>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;"></MudTh>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;"></MudTh>
+    </HeaderContent>
+    <RowTemplate Context="invoice">
+        <MudTd DataLabel="Invoice Number">@invoice.InvoiceNumber</MudTd>
+        <MudTd DataLabel="Amount">@invoice.Amount.ToString("C")</MudTd>
+        <MudTd DataLabel="Date Issued">@invoice.DateIssued.ToShortDateString()</MudTd>
+        <MudTd DataLabel="Due Date">@invoice.DueDate.ToShortDateString()</MudTd>
+        <MudTd DataLabel="Update">
+            <MudTooltip Text="Update">
+                <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Size="Size.Small" OnClick="@(() => CreateOrUpdateInvoice(invoice))" />
+            </MudTooltip>
+        </MudTd>
+        <MudTd DataLabel="Delete">
+            <MudTooltip Text="Delete">
+                <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Primary" Size="Size.Small" OnClick="@(() => DeleteInvoice(invoice))" />
+            </MudTooltip>
+        </MudTd>
+    </RowTemplate>
+    <NoRecordsContent>
+        <MudText>No invoices found</MudText>
+    </NoRecordsContent>
+    <LoadingContent>
+        <MudText>Loading...</MudText>
+    </LoadingContent>
+    <PagerContent>
+        <MudTablePager RowsPerPageString="Items per page" InfoFormat="@InfoFormat" />
+    </PagerContent>
+</MudTable>
