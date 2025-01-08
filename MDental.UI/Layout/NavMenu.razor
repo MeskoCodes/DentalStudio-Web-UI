@@ -1,39 +1,47 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">MDental.UI</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+﻿@inject IAuthenticationViewModel AuthenticationViewModel;
+@inject AuthenticationStateProvider AuthenticationStateProvider;
+@inject NavigationManager NavigationManager;
+@inject ILocalStorageService LocalStorage;
+
+<div style="padding:8%; height: 100%;">
+    <MudNavMenu Class="mud-width-full " Color="Color.Primary">
+        <div style="width:100%; margin:0 auto; padding:10px">
+            <MudText Typo="Typo.h5" Color="Color.Tertiary">Hello @AccountFirstName</MudText>
+        </div>
+        <MudDivider Class="my-2" />
+        <MudNavLink Href="/dashboard" Icon="@Icons.Material.Filled.Home" IconColor="Color.Tertiary">Dashboard</MudNavLink>
+
+        <!-- Link za korisnike -->
+        <AuthorizeView Roles="User">
+            <Authorized>
+                <MudNavLink Href="/schedule" Icon="@Icons.Material.Filled.CalendarToday" IconColor="Color.Tertiary">Schedule Appointment</MudNavLink>
+            </Authorized>
+        </AuthorizeView>
+
+        <!-- Linkovi za administratore -->
+        <AuthorizeView Roles="Admin">
+            <Authorized>
+                <MudNavLink Href="/patients" Icon="@Icons.Material.Filled.People" IconColor="Color.Tertiary">Manage Patients</MudNavLink>
+                <MudNavLink Href="/employees" Icon="@Icons.Material.Filled.Work" IconColor="Color.Tertiary">Manage Employees</MudNavLink>
+                <MudNavLink Href="/treatments" Icon="@Icons.Material.Filled.Healing" IconColor="Color.Tertiary">Manage Treatments</MudNavLink>
+                <MudNavLink Href="/invoices" Icon="@Icons.Material.Filled.Receipt" IconColor="Color.Tertiary">Manage Invoices</MudNavLink>
+                <MudNavLink Href="/appointments" Icon="@Icons.Material.Filled.Event" IconColor="Color.Tertiary">Manage Appointments</MudNavLink>
+            </Authorized>
+        </AuthorizeView>
+
+        <MudNavLink Href="/accountsettings" Icon="@Icons.Material.Filled.ManageAccounts" IconColor="Color.Tertiary">Account Settings</MudNavLink>
+    </MudNavMenu>
+    <div style="width:84%;padding:6px;text-align:center; position:absolute; bottom:0">
+        <MudButton style="width:100%;" OnClick="AuthenticationViewModel.Logout" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Logout" Color="Color.Secondary">Logout</MudButton>
     </div>
 </div>
 
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
-    </nav>
-</div>
-
 @code {
-    private bool collapseNavMenu = true;
+    private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
+    private string? AccountFirstName { get; set; }
 
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
+    protected override async Task OnInitializedAsync()
     {
-        collapseNavMenu = !collapseNavMenu;
+        AccountFirstName = await LocalStorage.GetItemAsync<string>("accountFirstName") ?? "User";
     }
 }

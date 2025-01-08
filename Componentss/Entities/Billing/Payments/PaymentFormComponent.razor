@@ -1,0 +1,74 @@
+﻿@using MudBlazor
+@using Contract.Billing
+@inherits PaymentFormViewModel
+
+@if (PaymentCreate != null && PaymentCreate.PaymentId == 0)
+{
+    <MudDialog Style="width:inherit">
+        <DialogContent>
+            <MudCard>
+                <MudCardContent>
+                    <MudItem xs="12">
+                        <MudDatePicker Label="Payment Date" Variant="Variant.Outlined" Required @bind-Value="PaymentCreate.PaymentDate" For="@(() => PaymentCreate.PaymentDate)" />
+
+                        <MudNumericField Label="Amount" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                         @bind-Value="PaymentCreate.Amount" For="@(() => PaymentCreate.Amount)" />
+
+                        <MudSelect T="PaymentDto" Variant="Variant.Outlined" Required Label="Payment Method" @bind-Value="@SelectedPaymentMethod">
+                            @foreach (var method in PaymentMethods)
+                            {
+                                <MudSelectItem Value="@method">@method</MudSelectItem>
+                            }
+                        </MudSelect>
+
+                        <MudSelect T="InvoiceDto" Variant="Variant.Outlined" Required Label="Invoice" @bind-Value="@SelectedInvoice">
+                            @foreach (var invoice in Invoices)
+                            {
+                                <MudSelectItem Value="@invoice">@invoice</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                </MudCardContent>
+            </MudCard>
+        </DialogContent>
+        <DialogActions>
+            <MudButton Color="Color.Tertiary" Variant="Variant.Filled" OnClick="() => Cancel()">Cancel</MudButton>
+            <MudButton ButtonType="ButtonType.Submit" Disabled="@Disabled" Variant="Variant.Filled" Color="Color.Tertiary" OnClick="() => CreateOrUpdate()">Save</MudButton>
+        </DialogActions>
+    </MudDialog>
+}
+else
+{
+    <MudDialog Style="width:inherit">
+        <DialogContent>
+            <MudCard>
+                <MudCardContent>
+                    <MudItem xs="12">
+                        <MudDatePicker Label="Payment Date" Variant="Variant.Outlined" Required @bind-Value="PaymentUpdate.PaymentDate" For="@(() => PaymentUpdate.PaymentDate)" />
+
+                        <MudNumericField Label="Amount" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                         @bind-Value="PaymentUpdate.Amount" For="@(() => PaymentUpdate.Amount)" />
+
+                        <MudSelect T="PaymentDto" Variant="Variant.Outlined" Required Label="Payment Method" @bind-Value="@SelectedPaymentMethod">
+                            @foreach (var method in PaymentMethods)
+                            {
+                                <MudSelectItem Value="@method">@method</MudSelectItem>
+                            }
+                        </MudSelect>
+
+                        <MudSelect T="InvoiceDto" Variant="Variant.Outlined" Required Label="Invoice" @bind-Value="@SelectedInvoice">
+                            @foreach (var invoice in Invoices)
+                            {
+                                <MudSelectItem Value="@invoice">@invoice</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                </MudCardContent>
+            </MudCard>
+        </DialogContent>
+        <DialogActions>
+            <MudButton Color="Color.Tertiary" Variant="Variant.Filled" OnClick="() => Cancel()">Cancel</MudButton>
+            <MudButton ButtonType="ButtonType.Submit" Disabled="@Disabled" Variant="Variant.Filled" Color="Color.Tertiary" OnClick="() => CreateOrUpdate()">Save</MudButton>
+        </DialogActions>
+    </MudDialog>
+}

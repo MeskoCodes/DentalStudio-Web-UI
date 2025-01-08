@@ -1,0 +1,60 @@
+﻿@using MudBlazor
+@inherits EmployeeListViewModel
+
+
+<MudTable Class="ml-4 mt-4 mr-4" Elevation="4" Items="@Employees" Dense Hover="true" Bordered="false" Filter="new Func<EmployeeDto, bool>(FilterFunc)" Loading="@Loading">
+    <ToolBarContent>
+        <MudButton StartIcon="@Icons.Material.Filled.Add" Color="Color.Tertiary" Variant="Variant.Outlined" style="font-weight: bold;" OnClick="@(() => CreateOrUpdateEmployee(new EmployeeDto()))">
+            Create new Employee
+        </MudButton>
+        <MudSpacer />
+        <MudTextField T="string" Label="Search" Variant="Variant.Outlined" @bind-Value="SearchEmployeeName" Clearable="true" Immediate="true" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Search"></MudTextField>
+    </ToolBarContent>
+    <ColGroup>
+        <col />
+        <col />
+        <col />
+        <col />
+        <col style="width:2px;" />
+        <col style="width:2px;" />
+    </ColGroup>
+    <HeaderContent>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">First Name</MudTh>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Last Name</MudTh>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Email</MudTh>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">MobileNumber</MudTh>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Specialisation</MudTh>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Role</MudTh>
+
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;"></MudTh>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;"></MudTh>
+    </HeaderContent>
+    <RowTemplate Context="employee">
+        <MudTd DataLabel="First Name">@employee.FirstName</MudTd>
+        <MudTd DataLabel="Last Name">@employee.LastName</MudTd>
+        <MudTd DataLabel="Email">@employee.Email</MudTd>
+        <MudTd DataLabel="Specialisation">@employee.Specialisation</MudTd>
+        <MudTd DataLabel="Mobile Number">@employee.MobileNumber</MudTd>
+        <MudTd DataLabel="Role">@employee.Role</MudTd>
+
+        <MudTd DataLabel="Update">
+            <MudTooltip Text="Update">
+                <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Size="Size.Small" OnClick="@(() => CreateOrUpdateEmployee(employee))" />
+            </MudTooltip>
+        </MudTd>
+        <MudTd DataLabel="Delete">
+            <MudTooltip Text="Delete">
+                <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Primary" Size="Size.Small" OnClick="@(() => DeleteEmployee(employee))" />
+            </MudTooltip>
+        </MudTd>
+    </RowTemplate>
+    <NoRecordsContent>
+        <MudText>No employees found</MudText>
+    </NoRecordsContent>
+    <LoadingContent>
+        <MudText>Loading...</MudText>
+    </LoadingContent>
+    <PagerContent>
+        <MudTablePager RowsPerPageString="Items per page" InfoFormat="@InfoFormat" />
+    </PagerContent>
+</MudTable>
