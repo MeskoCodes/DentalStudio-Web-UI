@@ -1,15 +1,13 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Components.Authorization;
+﻿using Microsoft.AspNetCore.Components.Authorization;
+using System.Security.Claims;
 
-
-namespace Services.AuthenticationService.AuthProviders
+namespace AuthProviders
 {
-    public class TokenAuthenticationStateProvider(TokenStorage tokenStorage) : AuthenticationStateProvider
+    public class TokenAuthenticationStateProvider(Services.AuthenticationService.AuthenticationService.AuthProviders.TokenStorage tokenStorage) : AuthenticationStateProvider
     {
         public void StateChanged()
         {
-            // Samo pozivamo metodu bez dodeljivanja rezultata
-            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync()); // <- Does nothing
         }
 
         private static IEnumerable<Claim> ParseClaimsFromJwt(string jwt)

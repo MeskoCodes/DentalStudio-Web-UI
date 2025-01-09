@@ -1,5 +1,7 @@
-﻿using Services.AuthenticationService;
-using Services.AuthenticationService.AuthProviders;
+﻿using AuthProviders;
+using Services;
+using Services.AuthenticationService.AuthenticationService;
+using Services.AuthenticationService.AuthenticationService.AuthProviders;
 using Services.Common.Dto.Authentication;
 
 namespace ViewModels

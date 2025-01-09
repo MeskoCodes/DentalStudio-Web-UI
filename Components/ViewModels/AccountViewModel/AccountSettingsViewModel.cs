@@ -1,5 +1,5 @@
 using Components.Accounts;
-using Services.Common.Dto.Account;
+using Dto;
 
 namespace ViewModels
 {

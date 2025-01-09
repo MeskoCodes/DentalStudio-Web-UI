@@ -1,5 +1,5 @@
 ﻿using Services.Common.Dto;
-using Services.Common.Dto.Account;
+using Dto;
 
 namespace ViewModels
 {
@@ -28,7 +28,7 @@ namespace ViewModels
         {
             if (response.IsSuccess)
             {
-                Snackbar!.Add("Success!",Severity.Success);
+                Snackbar!.Add("Success!", Severity.Success);
                 StateHasChanged();
             }
             else

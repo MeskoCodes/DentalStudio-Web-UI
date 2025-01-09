@@ -2,15 +2,14 @@
 global using Mapster;
 global using Microsoft.AspNetCore.Components;
 global using MudBlazor;
-using Services.AuthenticationService;
-using Services.AuthenticationService.AuthProviders;
 using Services.TreatmentService;
 using Services.Billing.InvoiceService;
 using Services.PatientService;
 using Services.Billing.PaymentService;
-using Services.AccountService;
 using Services.EmployeeService;
 using Services.AppointmentService;
+using Services;
+using AuthProviders;
 
 namespace ViewModels
 {

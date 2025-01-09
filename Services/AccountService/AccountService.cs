@@ -1,8 +1,8 @@
-﻿using Services.Common;
+﻿using Dto;
 using Services.Common.Dto;
-using Services.Common.Dto.Account;
+using Services.Common;
 
-namespace Services.AccountService
+namespace Services
 {
     public class AccountService(IApiService apiService) : IAccountService
     {

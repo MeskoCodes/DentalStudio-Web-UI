@@ -1,4 +1,4 @@
-﻿namespace Services.Common.Dto.Account;
+﻿namespace Dto;
 
 public class AccountDto
 {
@@ -25,7 +25,6 @@ public class AccountDto
 
 public class AccountCreateDto
 {
-    public string Id { get; set; }
     public string FirstName { get; set; } = string.Empty;
 
     public string? LastName { get; set; }
