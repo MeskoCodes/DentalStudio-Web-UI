@@ -1,4 +1,4 @@
-﻿namespace Services
+﻿namespace Services.Common
 {
     public class ApiService(HttpClient httpClient, ILocalStorageService localStorage) : IApiService
     {
@@ -20,7 +20,7 @@
             await AddAuthorizationHeader();
             return await httpClient.SendAsync(request);
         }
-       
+
         public async Task<HttpResponseMessage> Put(string url, object obj)
         {
             var json = new StringContent(

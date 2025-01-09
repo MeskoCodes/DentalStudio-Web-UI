@@ -1,6 +1,6 @@
-﻿using Contract;
+﻿using Services.Common.Dto;
 
-namespace Services
+namespace Services.EmployeeService
 {
     public interface IEmployeeService
     {

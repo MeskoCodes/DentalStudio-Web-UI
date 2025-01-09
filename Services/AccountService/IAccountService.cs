@@ -1,4 +1,7 @@
-﻿namespace Services
+﻿using Services.Common.Dto;
+using Services.Common.Dto.Account;
+
+namespace Services.AccountService
 {
     public interface IAccountService
     {

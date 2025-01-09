@@ -1,6 +1,7 @@
-﻿using Contract;
+﻿using Services.Common;
+using Services.Common.Dto;
 
-namespace Services
+namespace Services.AppointmentService
 {
     public class AppointmentService : IAppointmentService
     {

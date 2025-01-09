@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Dto;
+namespace Services.Common.Dto.Authentication;
 
 public class LoginDto
 {
@@ -8,6 +8,6 @@ public class LoginDto
     [EmailAddress(ErrorMessage = "E-Mail hat nicht das richtige Format!")]
     public string? Email { get; set; }
 
-    [Required(ErrorMessage = "Passwort wird benötigt!")]
+    [Required(ErrorMessage = "Password Required!")]
     public string? Password { get; set; }
 }

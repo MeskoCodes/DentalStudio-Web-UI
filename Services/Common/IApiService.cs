@@ -1,4 +1,4 @@
-﻿namespace Services
+﻿namespace Services.Common
 {
     public interface IApiService
     {

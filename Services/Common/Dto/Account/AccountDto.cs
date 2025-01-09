@@ -1,4 +1,4 @@
-﻿namespace Dto;
+﻿namespace Services.Common.Dto.Account;
 
 public class AccountDto
 {

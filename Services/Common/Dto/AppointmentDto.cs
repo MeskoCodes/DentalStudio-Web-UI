@@ -1,5 +1,4 @@
-﻿
-namespace Dto
+﻿namespace Services.Common.Dto
 {
     public class AppointmentDto
     {
@@ -7,6 +6,7 @@ namespace Dto
         public int EmployeeId { get; set; }
         public int TreatmentId { get; set; }
         public int PatientId { get; set; }
+        public int PatientName { get; set; }
         public DateTime AppointmentDate { get; set; }
         public TimeSpan AppointmentTime { get; set; }
         public string Status { get; set; } = string.Empty;
@@ -18,8 +18,10 @@ namespace Dto
         public int EmployeeId { get; set; }
         public int TreatmentId { get; set; }
         public int PatientId { get; set; }
+        public int PatientName { get; set; }
         public DateTime AppointmentDate { get; set; }
         public TimeSpan AppointmentTime { get; set; }
+        public string Status { get; set; } = string.Empty;
     }
 
     public class AppointmentUpdateDto
@@ -27,6 +29,7 @@ namespace Dto
         public int AppointmentId { get; set; }
         public int EmployeeId { get; set; }
         public int TreatmentId { get; set; }
+        public int PatientName { get; set; }
         public int PatientId { get; set; }
         public DateTime AppointmentDate { get; set; }
         public TimeSpan AppointmentTime { get; set; }

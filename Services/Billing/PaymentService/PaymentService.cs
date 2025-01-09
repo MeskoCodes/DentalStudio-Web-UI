@@ -1,6 +1,8 @@
-﻿using Contract.Billing;
+﻿using Services.Common;
+using Services.Common.Dto;
+using Services.Common.Dto.Billing;
 
-namespace Services
+namespace Services.Billing.PaymentService
 {
     public class PaymentService : IPaymentService
     {

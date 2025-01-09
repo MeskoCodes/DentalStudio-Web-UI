@@ -1,4 +1,8 @@
-﻿namespace Services
+﻿using Services.Common;
+using Services.Common.Dto;
+using Services.Common.Dto.Authentication;
+
+namespace Services.AuthenticationService
 {
     public class AuthenticationService(IApiService apiService, HttpClient client, ILocalStorageService localStorage) : IAuthenticationService
     {

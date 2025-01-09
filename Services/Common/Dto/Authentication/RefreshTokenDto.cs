@@ -1,4 +1,4 @@
-﻿namespace Dto;
+﻿namespace Services.Common.Dto.Authentication;
 
 public class RefreshTokenDto
 {

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components.Authorization;
 
 
-namespace AuthProviders
+namespace Services.AuthenticationService.AuthProviders
 {
     public class TokenAuthenticationStateProvider(TokenStorage tokenStorage) : AuthenticationStateProvider
     {

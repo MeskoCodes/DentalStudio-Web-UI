@@ -1,6 +1,4 @@
-﻿
-
-namespace Contract.Billing
+﻿namespace Services.Common.Dto.Billing
 {
     public class PaymentDto
     {

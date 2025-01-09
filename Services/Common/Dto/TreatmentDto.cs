@@ -1,4 +1,4 @@
-﻿namespace Dto
+﻿namespace Services.Common.Dto
 {
     public class TreatmentDto
     {

@@ -1,4 +1,7 @@
-﻿namespace Services
+﻿using Services.Common.Dto;
+using Services.Common.Dto.Authentication;
+
+namespace Services.AuthenticationService
 {
     public interface IAuthenticationService
     {

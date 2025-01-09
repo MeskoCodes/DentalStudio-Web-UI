@@ -1,4 +1,4 @@
-﻿namespace AuthProviders
+﻿namespace Services.AuthenticationService.AuthProviders
 {
     public class TokenStorage(
         ILocalStorageService localStorage)
