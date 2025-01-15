@@ -1,38 +1,45 @@
-﻿@inject IAuthenticationViewModel AuthenticationViewModel;
-@inject AuthenticationStateProvider AuthenticationStateProvider;
-@inject NavigationManager NavigationManager;
-@inject ILocalStorageService LocalStorage;
+﻿@inject IAuthenticationViewModel AuthenticationViewModel
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+@inject ILocalStorageService LocalStorage
 
-<div style="padding:8%; height: 100%;">
-    <MudNavMenu Class="mud-width-full " Color="Color.Primary">
-        <div style="width:100%; margin:0 auto; padding:10px">
-            <MudText Typo="Typo.h5" Color="Color.Tertiary">Hello @AccountFirstName</MudText>
+<div style="padding: 8%; height: 100%;">
+    <MudNavMenu Class="mud-width-full" Color="Color.Primary">
+        <div style="width: 100%; margin: 0 auto; padding: 10px;">
+            <MudText Typo="Typo.h5" Color="Color.Tertiary">Dobrodošli, @AccountFirstName</MudText>
         </div>
         <MudDivider Class="my-2" />
-        <MudNavLink Href="/dashboard" Icon="@Icons.Material.Filled.Home" IconColor="Color.Tertiary">Dashboard</MudNavLink>
+        <MudNavLink Href="/dashboard" Icon="@Icons.Material.Filled.Home" IconColor="Color.Tertiary">Početna</MudNavLink>
 
-        <!-- Link za korisnike -->
         <AuthorizeView Roles="User">
             <Authorized>
-                <MudNavLink Href="/schedule" Icon="@Icons.Material.Filled.CalendarToday" IconColor="Color.Tertiary">Schedule Appointment</MudNavLink>
+                <MudNavLink Href="/appointments" Icon="@Icons.Material.Filled.CalendarToday" IconColor="Color.Tertiary">Termini</MudNavLink>
+                <MudNavLink Href="/treatments" Icon="@Icons.Material.Filled.MedicalServices" IconColor="Color.Tertiary">Tretmani</MudNavLink>
             </Authorized>
         </AuthorizeView>
 
-        <!-- Linkovi za administratore -->
         <AuthorizeView Roles="Admin">
             <Authorized>
-                <MudNavLink Href="/patients" Icon="@Icons.Material.Filled.People" IconColor="Color.Tertiary">Manage Patients</MudNavLink>
-                <MudNavLink Href="/employees" Icon="@Icons.Material.Filled.Work" IconColor="Color.Tertiary">Manage Employees</MudNavLink>
-                <MudNavLink Href="/treatments" Icon="@Icons.Material.Filled.Healing" IconColor="Color.Tertiary">Manage Treatments</MudNavLink>
-                <MudNavLink Href="/invoices" Icon="@Icons.Material.Filled.Receipt" IconColor="Color.Tertiary">Manage Invoices</MudNavLink>
-                <MudNavLink Href="/appointments" Icon="@Icons.Material.Filled.Event" IconColor="Color.Tertiary">Manage Appointments</MudNavLink>
+                <MudNavLink Href="/employees" Icon="@Icons.Material.Filled.People" IconColor="Color.Tertiary">Zaposleni</MudNavLink>
+                <MudNavLink Href="/patients" Icon="@Icons.Material.Filled.Person" IconColor="Color.Tertiary">Pacijenti</MudNavLink>
+                <MudNavLink Href="/invoices" Icon="@Icons.Material.Filled.Receipt" IconColor="Color.Tertiary">Fakture</MudNavLink>
+                <MudNavLink Href="/payments" Icon="@Icons.Material.Filled.Payment" IconColor="Color.Tertiary">Plaćanja</MudNavLink>
+                <MudNavLink Href="/appointments" Icon="@Icons.Material.Filled.CalendarToday" IconColor="Color.Tertiary">Termini</MudNavLink>
+                <MudNavLink Href="/treatments" Icon="@Icons.Material.Filled.MedicalServices" IconColor="Color.Tertiary">Tretmani</MudNavLink>
             </Authorized>
         </AuthorizeView>
 
-        <MudNavLink Href="/accountsettings" Icon="@Icons.Material.Filled.ManageAccounts" IconColor="Color.Tertiary">Account Settings</MudNavLink>
+        <MudNavLink Href="/accountsettings" Icon="@Icons.Material.Filled.ManageAccounts" IconColor="Color.Tertiary">Postavke Računa</MudNavLink>
     </MudNavMenu>
-    <div style="width:84%;padding:6px;text-align:center; position:absolute; bottom:0">
-        <MudButton style="width:100%;" OnClick="AuthenticationViewModel.Logout" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Logout" Color="Color.Secondary">Logout</MudButton>
+
+    <div style="width: 84%; padding: 6px; text-align: center; position: absolute; bottom: 0;">
+        <MudButton Style="width: 100%;"
+                   OnClick="AuthenticationViewModel.Logout"
+                   Variant="Variant.Filled"
+                   StartIcon="@Icons.Material.Filled.Logout"
+                   Color="Color.Secondary">
+            Odjava
+        </MudButton>
     </div>
 </div>
 
@@ -42,6 +49,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        AccountFirstName = await LocalStorage.GetItemAsync<string>("accountFirstName") ?? "User";
+        AccountFirstName = await LocalStorage.GetItemAsync<string>("accountFirstName") ?? "Korisnik";
     }
 }

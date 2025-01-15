@@ -76,7 +76,7 @@ namespace ViewModels
         }
         protected bool FilterFunc(InvoiceDto element)
         {
-            return  element.InvoiceNumber == decimal.Parse(SearchInvoiceNumber);
+            return  element.InvoiceNumber == (SearchInvoiceNumber);
         }
     }
 

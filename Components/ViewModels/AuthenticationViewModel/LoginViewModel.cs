@@ -6,9 +6,8 @@ public class LoginViewModel : ComponentBaseViewModel
 {
     protected LoginDto Login = new();
     protected bool ShowAuthError { get; set; }
-    protected bool IsLoading { get; set; } = true;
     protected string? Error { get; set; }
-    
+
     protected bool showPassword;
     protected InputType PasswordInput = InputType.Password;
     protected string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
@@ -21,7 +20,6 @@ public class LoginViewModel : ComponentBaseViewModel
         // // {
         // //     navigationManager.NavigateTo("/dashboard");
         // // }
-        IsLoading = false;
     }
 
     protected async Task ExecuteLogin()

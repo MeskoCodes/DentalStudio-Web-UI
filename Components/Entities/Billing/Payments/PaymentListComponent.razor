@@ -55,14 +55,18 @@
     private async Task LoadPayments()
     {
         Loading = true;
-        Payments.Clear();  // Očisti prethodne podatke ako je potrebno
+        Payments.Clear();
         var paymentList = await PaymentService.GetAll();
-        foreach (var payment in paymentList)
+        if (paymentList != null)
         {
-            Payments.Add(payment);  // Dodaj nove podatke
+            foreach (var payment in paymentList)
+            {
+                Payments.Add(payment);
+            }
         }
         Loading = false;
     }
+
 
     private bool FilterFunc(PaymentDto payment) =>
         string.IsNullOrWhiteSpace(SearchPaymentMethod) || payment.PaymentMethod.Contains(SearchPaymentMethod, StringComparison.OrdinalIgnoreCase);

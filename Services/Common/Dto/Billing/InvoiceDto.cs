@@ -6,7 +6,7 @@
         public int EmployeeId { get; set; }
         public DateTime IssuedDate { get; set; }
         public decimal TotalAmount { get; set; }
-        public decimal InvoiceNumber { get; set; }
+        public string InvoiceNumber { get; set; }
         public string Status { get; set; } = string.Empty;
     }
 
@@ -16,7 +16,7 @@
         public int EmployeeId { get; set; }
         public decimal TotalAmount { get; set; }
         public DateTime IssuedDate { get; set; }
-        public decimal InvoiceNumber { get; set; }
+        public string InvoiceNumber { get; set; }
         public string Status { get; set; } = string.Empty;
     }
 
@@ -24,7 +24,7 @@
     {
         public int InvoiceId { get; set; }
         public decimal TotalAmount { get; set; }
-        public decimal InvoiceNumber { get; set; }
+        public string InvoiceNumber { get; set; }
 
         public DateTime IssuedDate { get; set; }
 

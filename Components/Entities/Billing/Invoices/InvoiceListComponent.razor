@@ -18,12 +18,14 @@
     <HeaderContent>
         <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Invoice Number</MudTh>
         <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Date Issued</MudTh>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Status</MudTh>
         <MudTh style="color:var(--mud-palette-primary); font-weight: bold;"></MudTh>
         <MudTh style="color:var(--mud-palette-primary); font-weight: bold;"></MudTh>
     </HeaderContent>
     <RowTemplate Context="invoice">
         <MudTd DataLabel="Invoice Number">@invoice.InvoiceNumber</MudTd>
         <MudTd DataLabel="Date Issued">@invoice.IssuedDate.ToShortDateString()</MudTd>
+        <MudTd DataLabel="Status">@invoice.Status</MudTd>
         <MudTd DataLabel="Update">
             <MudTooltip Text="Update">
                 <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Size="Size.Small" OnClick="@(() => CreateOrUpdateInvoice(invoice))" />

@@ -18,14 +18,12 @@ using AuthProviders;
 using Services;
 using Services.AuthenticationService.Dto;
 
+
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-// Dodavanje HttpClient sa baznom adresom API-ja
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5275/") }); // Ovde koristite URL vašeg API-ja
-
-// Konfiguracija MudBlazor servisa
+builder.Services.AddHttpClient();
 builder.Services.AddMudServices(config =>
 {
     config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomRight;
@@ -37,26 +35,20 @@ builder.Services.AddMudServices(config =>
     config.SnackbarConfiguration.ShowTransitionDuration = 500;
     config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
 });
-
-// Registracija servisa i token autentifikacije
 builder.Services.AddScoped<TokenStorage>();
 builder.Services.AddScoped<TokenAuthenticationStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<TokenAuthenticationStateProvider>());
 builder.Services.AddScoped<IApiService, ApiService>();
-
-// Registracija Blazored Local Storage i autorizacije
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();
-
-// Registracija aplikacijskih servisa
-builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IAuthenticationViewModel, AuthenticationViewModel>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<ITreatmentService, TreatmentService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
-builder.Services.AddScoped<IAuthenticationViewModel, AuthenticationViewModel>();
 
 await builder.Build().RunAsync();

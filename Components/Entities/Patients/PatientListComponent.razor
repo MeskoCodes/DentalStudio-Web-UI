@@ -18,6 +18,8 @@
     <HeaderContent>
         <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">First Name</MudTh>
         <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Last Name</MudTh>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">DateOfBirth</MudTh>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">MobileNumber</MudTh>
         <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Email</MudTh>
         <MudTh style="color:var(--mud-palette-primary); font-weight: bold;"></MudTh>
         <MudTh style="color:var(--mud-palette-primary); font-weight: bold;"></MudTh>
@@ -25,6 +27,8 @@
     <RowTemplate Context="patient">
         <MudTd DataLabel="First Name">@patient.FirstName</MudTd>
         <MudTd DataLabel="Last Name">@patient.LastName</MudTd>
+        <MudTd DataLabel="Date of Birth">@patient.DateOfBirth</MudTd>
+        <MudTd DataLabel="Mobile Number">@patient.MobileNumber</MudTd>
         <MudTd DataLabel="Email">@patient.Email</MudTd>
         <MudTd DataLabel="Update">
             <MudTooltip Text="Update">
