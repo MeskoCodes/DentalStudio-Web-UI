@@ -6,22 +6,23 @@ global using MudBlazor;
 global using MudBlazor.Services;
 using MDental.UI;
 using ViewModels;
-using Services.Billing.PaymentService;
+using Services.PaymentService;
 using Services.PatientService;
 using Services.AuthenticationService.AuthenticationService.AuthProviders;
 using Services.AppointmentService;
-using Services.Billing.InvoiceService;
 using Services.TreatmentService;
 using Services.EmployeeService;
 using Services.Common;
 using AuthProviders;
 using Services;
 using Services.AuthenticationService.Dto;
+using Services.InvoiceService;
 
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
+
 
 builder.Services.AddHttpClient();
 builder.Services.AddMudServices(config =>
@@ -51,4 +52,6 @@ builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 
+
 await builder.Build().RunAsync();
+

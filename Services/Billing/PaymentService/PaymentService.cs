@@ -2,7 +2,7 @@
 using Services.Common.Dto;
 using Services.Common.Dto.Billing;
 
-namespace Services.Billing.PaymentService
+namespace Services.PaymentService
 {
     public class PaymentService : IPaymentService
     {

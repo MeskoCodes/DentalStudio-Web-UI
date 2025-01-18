@@ -1,4 +1,5 @@
-﻿@inherits AppointmentFormViewModel
+﻿@using MudBlazor
+@inherits AppointmentFormViewModel
 
 @if (AppointmentCreate != null && AppointmentCreate.AppointmentId == 0)
 {
@@ -7,29 +8,30 @@
             <MudCard>
                 <MudCardContent>
                     <MudItem xs="12">
-                        <MudSelect T="int" Variant="Variant.Outlined" Required Label="Patient" @bind-Value="AppointmentCreate.PatientId">
-                            @foreach (var patient in Patients)
-                            {
-                                <MudSelectItem Value=@patient.PatientId>@patient.FirstName</MudSelectItem>
-                            }
-                        </MudSelect>
+                       
+                        <MudTextField Label="Date" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="AppointmentCreate.AppointmentDate" For="@(() => AppointmentCreate.AppointmentDate)" />
 
-                        <MudSelect T="int" Variant="Variant.Outlined" Required Label="Employee" @bind-Value="AppointmentCreate.EmployeeId">
-                            @foreach (var employee in Employees)
-                            {
-                                <MudSelectItem Value=@employee.EmployeeId>@employee.FirstName</MudSelectItem>
-                            }
-                        </MudSelect>
+                        <MudTextField Label="Time" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="AppointmentCreate.AppointmentTime" For="@(() => AppointmentCreate.AppointmentTime)" />
 
-                        <MudDatePicker Label="Appointment Date" Variant="Variant.Outlined" @bind-Value="AppointmentCreate.AppointmentDate" />
-                        <MudTimePicker Label="Appointment Time" Variant="Variant.Outlined" @bind-Value="AppointmentCreate.AppointmentTime" />
-
-                        <MudSelect T="int" Variant="Variant.Outlined" Required Label="Treatment" @bind-Value="AppointmentCreate.TreatmentId">
-                            @foreach (var treatment in Treatments)
+                        <MudSelect Label="Status" Variant="Variant.Outlined" Immediate="true" Required="true"
+                                   @bind-Value="AppointmentCreate.Status">
+                            @foreach (var status in StatusOptions)
                             {
-                                <MudSelectItem Value=@treatment.TreatmentId>@treatment.Name</MudSelectItem>
+                                <MudSelectItem Value="@status">@status</MudSelectItem>
                             }
-                        </MudSelect>
+                            </MudSelect>
+
+
+                        <MudTextField Label="Employee ID" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="AppointmentCreate.EmployeeId" For="@(() => AppointmentCreate.EmployeeId)" />
+
+                        <MudTextField Label="Patient ID" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="AppointmentCreate.PatientId" For="@(() => AppointmentCreate.PatientId)" />
+
+                        <MudTextField Label="Treatment ID" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="AppointmentCreate.TreatmentId" For="@(() => AppointmentCreate.TreatmentId)" />
                     </MudItem>
                 </MudCardContent>
             </MudCard>
@@ -47,35 +49,29 @@ else
             <MudCard>
                 <MudCardContent>
                     <MudItem xs="12">
-                        <MudSelect T="int" Variant="Variant.Outlined" Required Label="Patient" @bind-Value="AppointmentUpdate.PatientId">
-                            @foreach (var patient in Patients)
+
+                        <MudTextField Label="Date" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="AppointmentUpdate.AppointmentDate" For="@(() => AppointmentUpdate.AppointmentDate)" />
+
+                        <MudTextField Label="Time" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="AppointmentUpdate.AppointmentTime" For="@(() => AppointmentUpdate.AppointmentTime)" />
+
+                        <MudSelect Label="Status" Variant="Variant.Outlined" Immediate="true" Required="true"
+                                   @bind-Value="AppointmentUpdate.Status">
+                            @foreach (var status in StatusOptions)
                             {
-                                <MudSelectItem Value=@patient.PatientId>@patient.FirstName</MudSelectItem>
+                                <MudSelectItem Value="@status">@status</MudSelectItem>
                             }
                         </MudSelect>
 
-                        <MudSelect T="int" Variant="Variant.Outlined" Required Label="Employee" @bind-Value="AppointmentUpdate.EmployeeId">
-                            @foreach (var employee in Employees)
-                            {
-                                <MudSelectItem Value=@employee.EmployeeId>@employee.FirstName</MudSelectItem>
-                            }
-                        </MudSelect>
+                        <MudTextField Label="Patient ID" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="AppointmentUpdate.PatientId" For="@(() => AppointmentUpdate.PatientId)" />
 
-                        <MudDatePicker Label="Appointment Date" Variant="Variant.Outlined" @bind-Value="AppointmentUpdate.AppointmentDate" />
-                        <MudTimePicker Label="Appointment Time" Variant="Variant.Outlined" @bind-Value="AppointmentUpdate.AppointmentTime" />
+                        <MudTextField Label="Treatment ID" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="AppointmentUpdate.TreatmentId" For="@(() => AppointmentUpdate.TreatmentId)" />
 
-                        <MudSelect T="int" Variant="Variant.Outlined" Required Label="Treatment" @bind-Value="AppointmentUpdate.TreatmentId">
-                            @foreach (var treatment in Treatments)
-                            {
-                                <MudSelectItem Value=@treatment.TreatmentId>@treatment.Name</MudSelectItem>
-                            }
-                        </MudSelect>
-
-                        <MudSelect T="string" Variant="Variant.Outlined" Required Label="Status" @bind-Value="AppointmentUpdate.Status">
-                            <MudSelectItem Value="@("Scheduled")">Scheduled</MudSelectItem>
-                            <MudSelectItem Value="@("Completed")">Completed</MudSelectItem>
-                            <MudSelectItem Value="@("Cancelled")">Cancelled</MudSelectItem>
-                        </MudSelect>
+                        <MudTextField Label="Employee ID" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="AppointmentUpdate.EmployeeId" For="@(() => AppointmentUpdate.EmployeeId)" />
                     </MudItem>
                 </MudCardContent>
             </MudCard>
@@ -86,3 +82,13 @@ else
         </DialogActions>
     </MudDialog>
 }
+
+@code {
+    private List<string> StatusOptions = new()
+    {
+        "Pending",
+        "Confirmed",
+        "Completed",
+        "Cancelled"
+    };
+    }

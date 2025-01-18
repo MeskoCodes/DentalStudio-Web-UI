@@ -2,6 +2,7 @@
 @inherits InvoiceFormViewModel
 
 @if (InvoiceCreate != null && InvoiceCreate.InvoiceId == 0)
+
 {
     <MudDialog Style="width:inherit">
         <DialogContent>
@@ -11,7 +12,24 @@
                         <MudTextField Label="Invoice Number" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
                                       @bind-Value="InvoiceCreate.InvoiceNumber" For="@(() => InvoiceCreate.InvoiceNumber)" />
 
-                        <MudDatePicker Label="Date Issued" Variant="Variant.Outlined" Required @bind-Value="InvoiceCreate.IssuedDate" For="@(() => InvoiceCreate.IssuedDate)" />
+                        <MudTextField Label="Total Amount" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="InvoiceCreate.TotalAmount" For="@(() => InvoiceCreate.TotalAmount)" />
+
+
+
+                        <MudTextField Label="Date Issued" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="InvoiceCreate.IssuedDate" For="@(() => InvoiceCreate.IssuedDate)" />
+
+                        <MudSelect Label="Status" Variant="Variant.Outlined" Immediate="true" Required="true"
+                                   @bind-Value="InvoiceCreate.Status">
+                            @foreach (var status in StatusOptions)
+
+
+
+                            {
+                                <MudSelectItem Value="@status">@status</MudSelectItem>
+                            }
+                        </MudSelect>
 
 
                     </MudItem>
@@ -24,7 +42,9 @@
         </DialogActions>
     </MudDialog>
 }
+
 else
+
 {
     <MudDialog Style="width:inherit">
         <DialogContent>
@@ -34,8 +54,24 @@ else
                         <MudTextField Label="Invoice Number" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
                                       @bind-Value="InvoiceUpdate.InvoiceNumber" For="@(() => InvoiceUpdate.InvoiceNumber)" />
 
+                        <MudTextField Label="Total Amount" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="InvoiceUpdate.TotalAmount" For="@(() => InvoiceUpdate.TotalAmount)" />
 
-                        <MudDatePicker Label="Date Issued" Variant="Variant.Outlined" Required @bind-Value="InvoiceUpdate.IssuedDate" For="@(() => InvoiceUpdate.IssuedDate)" />
+
+                        <MudTextField Label="Date Issued" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="InvoiceUpdate.IssuedDate" For="@(() => InvoiceUpdate.IssuedDate)" />
+
+                        <MudSelect Label="Status" Variant="Variant.Outlined" Immediate="true" Required="true"
+                                   @bind-Value="InvoiceUpdate.Status">
+                            @foreach (var status in StatusOptions)
+
+                            {
+                                <MudSelectItem Value="@status">@status</MudSelectItem>
+                            }
+                        </MudSelect>
+
+                        <MudTextField Label="Employee ID" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="InvoiceUpdate.EmployeeId" For="@(() => InvoiceUpdate.EmployeeId)" />
 
                     </MudItem>
                 </MudCardContent>
@@ -43,7 +79,18 @@ else
         </DialogContent>
         <DialogActions>
             <MudButton Color="Color.Tertiary" Variant="Variant.Filled" OnClick="() => Cancel()">Cancel</MudButton>
-            <MudButton ButtonType="ButtonType.Submit" Disabled=@Disabled Variant="Variant.Filled" Color="Color.Tertiary" OnClick="() => CreateOrUpdate()">Save</MudButton>
+            <MudButton ButtonType="ButtonType.Submit" Disabled="@Disabled" Variant="Variant.Filled" Color="Color.Tertiary" OnClick="() => CreateOrUpdate()">Save</MudButton>
         </DialogActions>
     </MudDialog>
+}
+@code {
+    private List<string> StatusOptions = new()
+    {
+        "Unpaid",
+        "Paid",
+        "Partially Paid",
+        "Overdue",
+        "Cancelled"
+    };
+
 }

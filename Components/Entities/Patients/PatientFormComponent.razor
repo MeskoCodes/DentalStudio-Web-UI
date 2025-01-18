@@ -14,6 +14,9 @@
                         <MudTextField Label="Last Name" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
                                       @bind-Value="PatientCreate.LastName" For="@(() => PatientCreate.LastName)" />
 
+                        <MudTextField Label="Birth Date" Variant="Variant.Outlined" Immediate="true" Required="true"
+                                      RequiredError="@ValidationMessage" DateFormat="yyyy-dd-MM" @bind-Value="PatientCreate.DateOfBirth" />
+
                         <MudTextField Label="Mobile Number" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
                                       @bind-Value="PatientCreate.MobileNumber" For="@(() => PatientCreate.MobileNumber)" />
 
@@ -41,6 +44,9 @@ else
 
                         <MudTextField Label="Last Name" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
                                       @bind-Value="PatientUpdate.LastName" For="@(() => PatientUpdate.LastName)" />
+
+                        <MudTextField Label="Birth Date" Variant="Variant.Outlined" Immediate="true" Required="true"
+                                      RequiredError="@ValidationMessage" DateFormat="yyyy-dd-MM" @bind-Value="PatientUpdate.DateOfBirth" />
 
                         <MudTextField Label="Mobile Number" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
                                       @bind-Value="PatientUpdate.MobileNumber" For="@(() => PatientUpdate.MobileNumber)" />

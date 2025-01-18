@@ -8,18 +8,19 @@ namespace ViewModels;
 public class PatientListViewModel : ComponentBaseViewModel
 {
     protected bool Loading;
-    protected ObservableCollection<PatientDto> Patients { get; set; } = [];
+    protected ObservableCollection<PatientDto> Patients { get; set; } = new ObservableCollection<PatientDto>();
     protected string? SearchPatientName { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        Loading = true;
         await LoadPatients();
         Loading = false;
     }
 
     protected async Task CreateOrUpdatePatient(PatientDto patientDto)
     {
-        DialogParameters parameters = [];
+        DialogParameters parameters;
         if (patientDto.PatientId == 0)
         {
             var patientCreate = patientDto.Adapt<PatientCreateDto>();
@@ -38,7 +39,7 @@ public class PatientListViewModel : ComponentBaseViewModel
         var result = await dialog.Result;
         if (!result!.Canceled)
         {
-            StateHasChanged();
+            await LoadPatients();
         }
     }
 
@@ -46,25 +47,29 @@ public class PatientListViewModel : ComponentBaseViewModel
     {
         try
         {
-            Patients = await PatientService!.GetAll();
-            StateHasChanged();
+            var patients = await PatientService!.GetAll();
+            Patients.Clear();
+            foreach (var patient in patients)
+            {
+                Patients.Add(patient);
+            }
         }
         catch (HttpRequestException ex)
         {
-            Console.WriteLine(ex.Message);
+            Console.WriteLine($"Error loading patients: {ex.Message}");
         }
     }
 
     protected async Task DeletePatient(PatientDto patient)
     {
-        var parameters = new DialogParameters();
-        const string text = "Are you sure you want to delete this patient?";
+        var parameters = new DialogParameters
+        {
+            { "ContentText", "Are you sure you want to delete this patient?" },
+            { "ButtonText", "Delete" },
+            { "Color", Color.Success }
+        };
 
-        parameters.Add("ContentText", text);
-        parameters.Add("ButtonText", "Delete");
-        parameters.Add("Color", Color.Success);
-
-        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
         var dialog = await DialogService!.ShowAsync<ConfirmComponent>("Delete Patient", parameters, options);
         var result = await dialog.Result;
 
@@ -80,7 +85,8 @@ public class PatientListViewModel : ComponentBaseViewModel
     protected bool FilterFunc(PatientDto element)
     {
         return string.IsNullOrWhiteSpace(SearchPatientName) ||
-               element.FirstName!.Contains(SearchPatientName, StringComparison.OrdinalIgnoreCase);
+               element.FirstName!.Contains(SearchPatientName, StringComparison.OrdinalIgnoreCase) ||
+               element.LastName!.Contains(SearchPatientName, StringComparison.OrdinalIgnoreCase);
     }
 
     private void HandleResponse(GeneralResponseDto response, PatientDto patient)
@@ -88,7 +94,6 @@ public class PatientListViewModel : ComponentBaseViewModel
         if (response.IsSuccess)
         {
             Patients.Remove(patient);
-            StateHasChanged();
             Snackbar!.Add("Success!", Severity.Success);
         }
         else

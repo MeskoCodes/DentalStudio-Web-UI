@@ -8,15 +8,15 @@ public class RegistrationDto
     public string? LastName { get; set; } = null!;
     public string? Email { get; set; }
 
-    [Required(ErrorMessage = "Pflichtfeld")]
+    [Required(ErrorMessage = "Required field")]
     [RegularExpression(@"(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*",
-    ErrorMessage = "Das Passwort muss mindestens 7 Zeichen lang sein und mindestens einen Großbuchstaben und eine Zahl enthalten!")]
-    [StringLength(16, MinimumLength = 7, ErrorMessage = "Mindestens 7")]
+    ErrorMessage = "Password must be at least 7 characters long and contain at least one uppercase letter and one number.")]
+    [StringLength(16, MinimumLength = 7, ErrorMessage = "At least 7 characters")]
     [DataType(DataType.Password)]
     public string Password { get; set; } = null!;
 
-    [Required(ErrorMessage = "Pflichtfeld")]
-    [Compare(nameof(Password), ErrorMessage = "Passwörter stimmen nicht überein")]
+    [Required(ErrorMessage = "Required field")]
+    [Compare(nameof(Password), ErrorMessage = "Passwords do not match")]
     public string ConfirmPassword { get; set; } = null!;
 
     public string? MobileNumber { get; set; } = null!;

@@ -8,24 +8,28 @@
             <MudCard>
                 <MudCardContent>
                     <MudItem xs="12">
-                        <MudDatePicker Label="Payment Date" Variant="Variant.Outlined" Required @bind-Value="PaymentCreate.PaymentDate" For="@(() => PaymentCreate.PaymentDate)" />
 
-                        <MudNumericField Label="Amount" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
-                                         @bind-Value="PaymentCreate.Amount" For="@(() => PaymentCreate.Amount)" />
 
-                        <MudSelect T="PaymentDto" Variant="Variant.Outlined" Required Label="Payment Method" @bind-Value="@SelectedPaymentMethod">
-                            @foreach (var method in PaymentMethods)
+                        <MudTextField Label="Amount" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="PaymentCreate.Amount" For="@(() => PaymentCreate.Amount)" />
+
+
+                        <MudTextField Label="Payment Date" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="PaymentCreate.PaymentDate" For="@(() => PaymentCreate.PaymentDate)" />
+
+
+                        <MudSelect Label="Payment Method" Variant="Variant.Outlined" Immediate="true" Required="true"
+                                   @bind-Value="PaymentCreate.PaymentMethod">
+                            @foreach (var status in PaymentOptions)
                             {
-                                <MudSelectItem Value="@method">@method</MudSelectItem>
+                                <MudSelectItem Value="@status">@status</MudSelectItem>
                             }
                         </MudSelect>
 
-                        <MudSelect T="InvoiceDto" Variant="Variant.Outlined" Required Label="Invoice" @bind-Value="@SelectedInvoice">
-                            @foreach (var invoice in Invoices)
-                            {
-                                <MudSelectItem Value="@invoice">@invoice</MudSelectItem>
-                            }
-                        </MudSelect>
+                        <MudTextField Label="Invoice ID" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="PaymentCreate.InvoiceId" For="@(() => PaymentCreate.InvoiceId)" />
+
+
                     </MudItem>
                 </MudCardContent>
             </MudCard>
@@ -43,24 +47,24 @@ else
             <MudCard>
                 <MudCardContent>
                     <MudItem xs="12">
-                        <MudDatePicker Label="Payment Date" Variant="Variant.Outlined" Required @bind-Value="PaymentUpdate.PaymentDate" For="@(() => PaymentUpdate.PaymentDate)" />
+                        <MudTextField Label="Amount" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="PaymentUpdate.Amount" For="@(() => PaymentUpdate.Amount)" />
 
-                        <MudNumericField Label="Amount" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
-                                         @bind-Value="PaymentUpdate.Amount" For="@(() => PaymentUpdate.Amount)" />
+                        <MudTextField Label="Payment Date" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="PaymentUpdate.PaymentDate" For="@(() => PaymentUpdate.PaymentDate)" />
 
-                        <MudSelect T="PaymentDto" Variant="Variant.Outlined" Required Label="Payment Method" @bind-Value="@SelectedPaymentMethod">
-                            @foreach (var method in PaymentMethods)
+
+                        <MudSelect Label="Payment Method" Variant="Variant.Outlined" Immediate="true" Required="true"
+                                   @bind-Value="PaymentUpdate.PaymentMethod">
+                            @foreach (var status in PaymentOptions)
                             {
-                                <MudSelectItem Value="@method">@method</MudSelectItem>
+                                <MudSelectItem Value="@status">@status</MudSelectItem>
                             }
                         </MudSelect>
 
-                        <MudSelect T="InvoiceDto" Variant="Variant.Outlined" Required Label="Invoice" @bind-Value="@SelectedInvoice">
-                            @foreach (var invoice in Invoices)
-                            {
-                                <MudSelectItem Value="@invoice">@invoice</MudSelectItem>
-                            }
-                        </MudSelect>
+                        <MudTextField Label="Invoice ID" Variant="Variant.Outlined" Immediate=true Required RequiredError=@ValidationMessage
+                                      @bind-Value="PaymentUpdate.InvoiceId" For="@(() => PaymentUpdate.InvoiceId)" />
+
                     </MudItem>
                 </MudCardContent>
             </MudCard>
@@ -70,4 +74,16 @@ else
             <MudButton ButtonType="ButtonType.Submit" Disabled="@Disabled" Variant="Variant.Filled" Color="Color.Tertiary" OnClick="() => CreateOrUpdate()">Save</MudButton>
         </DialogActions>
     </MudDialog>
+}
+@code {
+    private List<string> PaymentOptions = new()
+    {
+        "Card",
+        "Cash",
+        "Check",
+        "Bank Transfer",
+        "Crypto"
+      
+    };
+
 }

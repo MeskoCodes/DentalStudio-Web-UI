@@ -27,7 +27,7 @@
     <RowTemplate Context="patient">
         <MudTd DataLabel="First Name">@patient.FirstName</MudTd>
         <MudTd DataLabel="Last Name">@patient.LastName</MudTd>
-        <MudTd DataLabel="Date of Birth">@patient.DateOfBirth</MudTd>
+        <MudTd DataLabel="Date of Birth">@patient.DateOfBirth.ToString("yyyy-dd-MM")</MudTd>
         <MudTd DataLabel="Mobile Number">@patient.MobileNumber</MudTd>
         <MudTd DataLabel="Email">@patient.Email</MudTd>
         <MudTd DataLabel="Update">

@@ -1,5 +1,4 @@
-﻿using Services.Billing.InvoiceService;
-using Services.Common.Dto;
+﻿using Services.Common.Dto;
 using Services.Common.Dto.Billing;
 
 namespace ViewModels
@@ -14,8 +13,6 @@ namespace ViewModels
 
         [Parameter]
         public InvoiceUpdateDto? InvoiceUpdate { get; set; }
-
-        [Inject] private IInvoiceService InvoiceService { get; set; } // Updated to reference the correct service
 
         protected override async Task OnInitializedAsync()
         {
@@ -32,11 +29,11 @@ namespace ViewModels
                 var response = new GeneralResponseDto();
                 if (InvoiceCreate != null && InvoiceCreate.InvoiceId == 0)
                 {
-                    response = await InvoiceService.Create(InvoiceCreate); // Updated method call
+                    response = await InvoiceService!.Create(InvoiceCreate);
                 }
                 else
                 {
-                    response = await InvoiceService.Update(InvoiceUpdate!.InvoiceId, InvoiceUpdate); // Updated method call
+                    response = await InvoiceService!.Update(InvoiceUpdate!.InvoiceId, InvoiceUpdate);
                 }
 
                 HandleResponse(response);
@@ -44,7 +41,7 @@ namespace ViewModels
             catch (HttpRequestException ex)
             {
                 Console.WriteLine(ex.Message);
-                MudDialog!.Close(DialogResult.Ok(false)); // Adjusted to handle failure scenario properly
+                MudDialog!.Close(DialogResult.Ok(true));
             }
         }
 
@@ -52,15 +49,14 @@ namespace ViewModels
         {
             var isSuccess = response?.IsSuccess == true;
             Snackbar!.Add(isSuccess ? "Success!" : "Error!", isSuccess ? Severity.Success : Severity.Error);
-            MudDialog!.Close(DialogResult.Ok(isSuccess)); // Close based on response success
+            MudDialog!.Close(DialogResult.Ok(true));
         }
 
         public void Cancel() => MudDialog!.Cancel();
 
         public bool Disabled =>
-            (
-                (InvoiceCreate != null && (string.IsNullOrWhiteSpace(InvoiceCreate.Status))) ||
-                (InvoiceUpdate != null && (string.IsNullOrWhiteSpace(InvoiceUpdate.Status)))
-            );
+            (InvoiceCreate != null && string.IsNullOrWhiteSpace(InvoiceCreate.InvoiceNumber)) ||
+            (InvoiceUpdate != null && string.IsNullOrWhiteSpace(InvoiceUpdate.InvoiceNumber));
     }
 }
+

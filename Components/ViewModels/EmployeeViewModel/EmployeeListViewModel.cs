@@ -8,18 +8,19 @@ namespace ViewModels;
 public class EmployeeListViewModel : ComponentBaseViewModel
 {
     protected bool Loading;
-    protected ObservableCollection<EmployeeDto> Employees { get; set; } = [];
+    protected ObservableCollection<EmployeeDto> Employees { get; set; } = new ObservableCollection<EmployeeDto>();
     protected string? SearchEmployeeName { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        Loading = true;
         await LoadEmployees();
         Loading = false;
     }
 
     protected async Task CreateOrUpdateEmployee(EmployeeDto employeeDto)
     {
-        DialogParameters parameters = [];
+        DialogParameters parameters;
         if (employeeDto.EmployeeId == 0)
         {
             var employeeCreate = employeeDto.Adapt<EmployeeCreateDto>();
@@ -38,7 +39,7 @@ public class EmployeeListViewModel : ComponentBaseViewModel
         var result = await dialog.Result;
         if (!result!.Canceled)
         {
-            StateHasChanged();
+            await LoadEmployees();
         }
     }
 
@@ -46,25 +47,29 @@ public class EmployeeListViewModel : ComponentBaseViewModel
     {
         try
         {
-            Employees = await EmployeeService!.GetAll();
-            StateHasChanged();
+            var employees = await EmployeeService!.GetAll();
+            Employees.Clear();
+            foreach (var employee in employees)
+            {
+                Employees.Add(employee);
+            }
         }
         catch (HttpRequestException ex)
         {
-            Console.WriteLine(ex.Message);
+            Console.WriteLine($"Error loading employees: {ex.Message}");
         }
     }
 
     protected async Task DeleteEmployee(EmployeeDto employee)
     {
-        var parameters = new DialogParameters();
-        const string text = "Are you sure you want to delete this employee?";
+        var parameters = new DialogParameters
+        {
+            { "ContentText", "Are you sure you want to delete this employee?" },
+            { "ButtonText", "Delete" },
+            { "Color", Color.Success }
+        };
 
-        parameters.Add("ContentText", text);
-        parameters.Add("ButtonText", "Delete");
-        parameters.Add("Color", Color.Success);
-
-        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
         var dialog = await DialogService!.ShowAsync<ConfirmComponent>("Delete Employee", parameters, options);
         var result = await dialog.Result;
 
@@ -80,7 +85,8 @@ public class EmployeeListViewModel : ComponentBaseViewModel
     protected bool FilterFunc(EmployeeDto element)
     {
         return string.IsNullOrWhiteSpace(SearchEmployeeName) ||
-               element.FirstName!.Contains(SearchEmployeeName, StringComparison.OrdinalIgnoreCase);
+               element.FirstName!.Contains(SearchEmployeeName, StringComparison.OrdinalIgnoreCase) ||
+               element.LastName!.Contains(SearchEmployeeName, StringComparison.OrdinalIgnoreCase);
     }
 
     private void HandleResponse(GeneralResponseDto response, EmployeeDto employee)
@@ -88,7 +94,6 @@ public class EmployeeListViewModel : ComponentBaseViewModel
         if (response.IsSuccess)
         {
             Employees.Remove(employee);
-            StateHasChanged();
             Snackbar!.Add("Success!", Severity.Success);
         }
         else

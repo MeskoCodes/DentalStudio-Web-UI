@@ -1,7 +1,7 @@
 ﻿using Services.Common.Dto;
 using Services.Common.Dto.Billing;
 
-namespace Services.Billing.InvoiceService
+namespace Services.InvoiceService
 {
     public interface IInvoiceService
     {

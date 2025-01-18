@@ -13,20 +13,10 @@ namespace ViewModels
         [Parameter]
         public AppointmentUpdateDto? AppointmentUpdate { get; set; }
 
-        public IEnumerable<TreatmentDto> Treatments { get; set; } = [];
-
-        public IEnumerable<PatientDto> Patients { get; set; } = [];
-        public IEnumerable<EmployeeDto> Employees { get; set; } = [];
-
-        public TreatmentDto? SelectedTreatment { get; set; }
-
         protected override async Task OnInitializedAsync()
         {
-            Treatments = await TreatmentService!.GetAll();
             if (AppointmentUpdate != null)
             {
-                var treatment = Treatments.FirstOrDefault(x => x.TreatmentId == AppointmentUpdate.TreatmentId);
-                SelectedTreatment = treatment;
                 StateHasChanged();
             }
         }
@@ -38,13 +28,11 @@ namespace ViewModels
                 var response = new GeneralResponseDto();
                 if (AppointmentCreate != null && AppointmentCreate.AppointmentId == 0)
                 {
-                    AppointmentCreate.TreatmentId = SelectedTreatment.TreatmentId;
                     response = await AppointmentService!.Create(AppointmentCreate);
                 }
                 else
                 {
-                    AppointmentUpdate!.TreatmentId = SelectedTreatment.TreatmentId;
-                    response = await AppointmentService!.Update(AppointmentUpdate!.AppointmentId!, AppointmentUpdate);
+                    response = await AppointmentService!.Update(AppointmentUpdate!.AppointmentId, AppointmentUpdate);
                 }
 
                 HandleResponse(response);
@@ -66,9 +54,7 @@ namespace ViewModels
         public void Cancel() => MudDialog!.Cancel();
 
         public bool Disabled =>
-            (
-                (AppointmentCreate != null && (string.IsNullOrWhiteSpace(AppointmentCreate.Status))) ||
-                (AppointmentUpdate != null && (string.IsNullOrWhiteSpace(AppointmentUpdate.Status)))
-            );
+            (AppointmentCreate != null && string.IsNullOrWhiteSpace(AppointmentCreate.Status)) ||
+            (AppointmentUpdate != null && string.IsNullOrWhiteSpace(AppointmentUpdate.Status));
     }
 }

@@ -6,7 +6,7 @@
             Create new Appointment
         </MudButton>
         <MudSpacer />
-        <MudTextField T="string" Label="Search" Variant="Variant.Outlined" @bind-Value="SearchAppointmentName" Clearable="true" Immediate="true" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Search"></MudTextField>
+        <MudTextField T="string" Label="Search" Variant="Variant.Outlined" @bind-Value="SearchAppointmentDate" Clearable="true" Immediate="true" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Search"></MudTextField>
     </ToolBarContent>
     <ColGroup>
         <col />
@@ -15,18 +15,17 @@
         <col style="width:2px;" />
     </ColGroup>
     <HeaderContent>
-        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Patient Name</MudTh>
-        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Date</MudTh>
+       
+         <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Date</MudTh>
         <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Time</MudTh>
         <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Status</MudTh>
         <MudTh style="color:var(--mud-palette-primary); font-weight: bold;"></MudTh>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;"></MudTh>
     </HeaderContent>
     <RowTemplate Context="appointment">
-        <MudTd DataLabel="Patient Name">@appointment.PatientName</MudTd>
-        <MudTd DataLabel="Date">@appointment.AppointmentDate.ToString("yyyy-MM-dd")</MudTd>
-        <MudTd DataLabel="Time">@appointment.AppointmentTime.ToString("HH:mm")</MudTd>
+        <MudTd DataLabel="Date">@appointment.AppointmentDate.ToString("yyyy-dd-MM")</MudTd>
+        <MudTd DataLabel="Time">@appointment.AppointmentTime</MudTd>
         <MudTd DataLabel="Status">@appointment.Status</MudTd>
-
         <MudTd DataLabel="Update">
             <MudTooltip Text="Update">
                 <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Size="Size.Small" OnClick="@(() => CreateOrUpdateAppointment(appointment))" />

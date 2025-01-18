@@ -1,5 +1,4 @@
-﻿@using MudBlazor
-@inherits InvoiceListViewModel
+﻿@inherits InvoiceListViewModel
 
 <MudTable Class="ml-4 mt-4 mr-4" Elevation="4" Items="@Invoices" Dense Hover="true" Bordered="false" Filter="new Func<InvoiceDto, bool>(FilterFunc)" Loading="@Loading">
     <ToolBarContent>
@@ -12,18 +11,20 @@
     <ColGroup>
         <col />
         <col />
+        <col />
         <col style="width:2px;" />
         <col style="width:2px;" />
     </ColGroup>
     <HeaderContent>
         <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Invoice Number</MudTh>
-        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Date Issued</MudTh>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Total Amount</MudTh>
+        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Issued Date</MudTh>
         <MudTh style="color:var(--mud-palette-primary); font-weight: bold;">Status</MudTh>
-        <MudTh style="color:var(--mud-palette-primary); font-weight: bold;"></MudTh>
         <MudTh style="color:var(--mud-palette-primary); font-weight: bold;"></MudTh>
     </HeaderContent>
     <RowTemplate Context="invoice">
         <MudTd DataLabel="Invoice Number">@invoice.InvoiceNumber</MudTd>
+        <MudTd DataLabel="Total Amount">@invoice.TotalAmount</MudTd>
         <MudTd DataLabel="Date Issued">@invoice.IssuedDate.ToShortDateString()</MudTd>
         <MudTd DataLabel="Status">@invoice.Status</MudTd>
         <MudTd DataLabel="Update">

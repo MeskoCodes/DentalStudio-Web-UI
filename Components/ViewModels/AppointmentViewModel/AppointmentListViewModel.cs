@@ -10,7 +10,7 @@ public class AppointmentListViewModel : ComponentBaseViewModel
     protected bool Loading;
     protected ObservableCollection<AppointmentDto> Appointments { get; set; } = new ObservableCollection<AppointmentDto>();
 
-    protected string? SearchAppointmentName { get; set; }
+    protected string? SearchAppointmentDate { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -39,10 +39,9 @@ public class AppointmentListViewModel : ComponentBaseViewModel
         var result = await dialog.Result;
         if (!result!.Canceled)
         {
-            StateHasChanged();
+            await LoadAppointments(); // Osvježavanje liste nakon dodavanja ili ažuriranja
         }
     }
-
 
     private async Task LoadAppointments()
     {
@@ -81,10 +80,9 @@ public class AppointmentListViewModel : ComponentBaseViewModel
 
     protected bool FilterFunc(AppointmentDto element)
     {
-        return string.IsNullOrWhiteSpace(SearchAppointmentName) ||
-               element.PatientId.ToString().Contains(SearchAppointmentName, StringComparison.OrdinalIgnoreCase);
+        return string.IsNullOrWhiteSpace(SearchAppointmentDate) ||
+               element.PatientId.ToString().Contains(SearchAppointmentDate, StringComparison.OrdinalIgnoreCase);
     }
-
 
     private void HandleResponse(GeneralResponseDto response, AppointmentDto appointment)
     {

@@ -1,5 +1,5 @@
-﻿using Services.Common.Dto;
-using Dto;
+﻿using Dto;
+using Services.Common.Dto;
 
 namespace ViewModels
 {
